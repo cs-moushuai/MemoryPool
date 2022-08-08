@@ -39,6 +39,14 @@ public:
     MemoryPool& operator=(const MemoryPool &rhs) = delete;
     MemoryPool& operator=(MemoryPool &&rhs) noexcept;
 
+    // == and != operators
+    template<typename U>
+    bool operator==(const MemoryPool<U>&) const noexcept;
+
+    template<typename U>
+    bool operator!=(const MemoryPool<U>&) const noexcept;
+
+
     pointer address(reference x) const noexcept;
     const_pointer address(const_reference x) const noexcept;
     size_type max_size() const noexcept;

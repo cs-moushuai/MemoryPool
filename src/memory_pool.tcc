@@ -53,6 +53,20 @@ noexcept {
 }
 
 template <typename T, size_t BlockSize>
+template<typename U>
+bool MemoryPool<T, BlockSize>::operator==(const MemoryPool<U>&)
+const noexcept {
+    return true;
+}
+
+template <typename T, size_t BlockSize>
+template<typename U>
+bool MemoryPool<T, BlockSize>::operator!=(const MemoryPool<U>&)
+const noexcept {
+    return false;
+}
+
+template <typename T, size_t BlockSize>
 inline typename MemoryPool<T, BlockSize>::pointer
 MemoryPool<T, BlockSize>::address(reference x)
 const noexcept {
@@ -128,7 +142,7 @@ MemoryPool<T, BlockSize>::newElement(Args&&... args) {
 template <typename T, size_t BlockSize>
 void MemoryPool<T, BlockSize>::deleteElement(pointer p) {
     if (p) {
-        p->~value_type();
+        // p->~value_type();
         deallocate(p);
     }
 }
