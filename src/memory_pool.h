@@ -18,6 +18,11 @@ public:
     typedef size_t          size_type;
     typedef ptrdiff_t       difference_type;
 
+    // 为了达成 vector 内置的效果
+    typedef std::false_type propagate_on_container_copy_assignment;
+    typedef std::true_type  propagate_on_container_move_assignment;
+    typedef std::true_type  propagate_on_container_swap;
+
     // todo
     template <typename U>
     struct rebind {
