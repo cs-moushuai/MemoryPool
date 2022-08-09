@@ -146,7 +146,7 @@ template <typename T, size_t BlockSize>
 inline void
 MemoryPool<T, BlockSize>::deleteElement(pointer p) {
     if (p) {
-        p->~value_type();
+        destroy(p);
         deallocate(p);
     }
 }
