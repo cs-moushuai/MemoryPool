@@ -33,7 +33,7 @@ noexcept {
     slot_pointer_ curr = currentBlock_;
     while (curr) {
         slot_pointer_ t = curr->next;
-        // 避免隐式转换
+        // 转化为 void* 避免调用 dtor
         operator delete(reinterpret_cast<void*>(curr));
         curr = t;
     }
@@ -142,7 +142,7 @@ MemoryPool<T, BlockSize>::newElement(Args&&... args) {
 template <typename T, size_t BlockSize>
 void MemoryPool<T, BlockSize>::deleteElement(pointer p) {
     if (p) {
-        // p->~value_type();
+        p->~value_type();
         deallocate(p);
     }
 }
