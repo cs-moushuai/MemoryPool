@@ -106,7 +106,8 @@ MemoryPool<T, BlockSize>::allocate(size_type n, const_pointer hint) {
 }
 
 template <typename T, size_t BlockSize>
-void MemoryPool<T, BlockSize>::deallocate(pointer p, size_type n) {
+inline void
+MemoryPool<T, BlockSize>::deallocate(pointer p, size_type n) {
     if (p) {
         reinterpret_cast<slot_pointer_>(p)->next = freeSlots_;
         freeSlots_ = reinterpret_cast<slot_pointer_>(p);
@@ -115,7 +116,8 @@ void MemoryPool<T, BlockSize>::deallocate(pointer p, size_type n) {
 
 template <typename T, size_t BlockSize>
 template <typename U, typename... Args>
-void MemoryPool<T, BlockSize>::construct(U* p, Args&&... args) {
+inline void
+MemoryPool<T, BlockSize>::construct(U* p, Args&&... args) {
     // todo 为什么类型是 U 不是 T
     // answer：U 是 value_type，本质也是 T
     new (p) U(std::forward<Args>(args)...);
@@ -123,7 +125,8 @@ void MemoryPool<T, BlockSize>::construct(U* p, Args&&... args) {
 
 template <typename T, size_t BlockSize>
 template <typename U>
-void MemoryPool<T, BlockSize>::destroy(U* p) {
+inline void
+MemoryPool<T, BlockSize>::destroy(U* p) {
     if (p) {
         p->~U();
     }
@@ -140,7 +143,8 @@ MemoryPool<T, BlockSize>::newElement(Args&&... args) {
 }
 
 template <typename T, size_t BlockSize>
-void MemoryPool<T, BlockSize>::deleteElement(pointer p) {
+inline void
+MemoryPool<T, BlockSize>::deleteElement(pointer p) {
     if (p) {
         p->~value_type();
         deallocate(p);
