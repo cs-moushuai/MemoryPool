@@ -37,6 +37,9 @@ const noexcept {
 template <typename T>
 inline typename Allocator<T>::pointer
 Allocator<T>::allocate(size_type n, const_pointer hint) {
+    // 单例模式调用getinstance存在线程安全问题，因为局部静态变量在第一次调用getinstance时才实例化
+    // c++11 保证不会出现这个问题，如果是之前的就要加锁或者...
+    // https://ost.51cto.com/posts/670
     return reinterpret_cast<pointer>(MemoryPool<T>::getInstance().allocate(n, hint));
 }
 
