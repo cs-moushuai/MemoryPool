@@ -3,7 +3,7 @@
 #include <ctime>    // clock()
 #include <vector>   // std::vector
 
-#include "../src/memory_pool.h" // MemoryPool<T>
+#include "../src/allocate.h" // Allocator<T>
 #include "stack_alloc.h" // StackAlloc<T, Alloc>
 
 // 插入元素个数
@@ -30,7 +30,7 @@ int main()
     std::cout << (((double)clock() - start) / CLOCKS_PER_SEC) << " s\n\n";
 
     // 使用内存池
-    StackAlloc<int, MemoryPool<int>> stackPool;
+    StackAlloc<int, Allocator<int>> stackPool;
     start = clock();
     for (int j = 0; j < REPS; j++)
     {

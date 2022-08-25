@@ -18,20 +18,8 @@ public:
     typedef size_t          size_type;
     typedef ptrdiff_t       difference_type;
 
-    // 为了达成 vector 内置的效果
-    typedef std::false_type propagate_on_container_copy_assignment;
-    typedef std::true_type  propagate_on_container_move_assignment;
-    typedef std::true_type  propagate_on_container_swap;
-
-    // todo
-    template <typename U>
-    struct rebind {
-        typedef MemoryPool<U> other;
-    };
 
     MemoryPool() noexcept;
-    // todo
-    MemoryPool(const MemoryPool &rhs) noexcept;
     MemoryPool(MemoryPool &&rhs) noexcept;
 
     ~MemoryPool() noexcept;
@@ -39,12 +27,6 @@ public:
     MemoryPool& operator=(const MemoryPool &rhs) = delete;
     MemoryPool& operator=(MemoryPool &&rhs) noexcept;
 
-    // == and != operators
-    template<typename U>
-    bool operator==(const MemoryPool<U>&) const noexcept;
-
-    template<typename U>
-    bool operator!=(const MemoryPool<U>&) const noexcept;
 
 
     pointer address(reference x) const noexcept;
@@ -62,6 +44,8 @@ public:
     template <typename... Args>
     pointer newElement(Args&&... args);
     void deleteElement(pointer p);
+
+    static MemoryPool& getInstance();
 
 private:
     union Slot_ {

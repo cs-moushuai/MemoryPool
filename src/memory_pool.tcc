@@ -12,10 +12,6 @@ noexcept {
 }
 
 template <typename T, size_t BlockSize>
-MemoryPool<T, BlockSize>::MemoryPool(const MemoryPool& rhs)
-noexcept: MemoryPool() {}
-
-template <typename T, size_t BlockSize>
 MemoryPool<T, BlockSize>::MemoryPool(MemoryPool &&rhs)
 noexcept {
     currentBlock_ = rhs.currentBlock_;
@@ -52,19 +48,6 @@ noexcept {
     return *this;
 }
 
-template <typename T, size_t BlockSize>
-template<typename U>
-bool MemoryPool<T, BlockSize>::operator==(const MemoryPool<U>&)
-const noexcept {
-    return true;
-}
-
-template <typename T, size_t BlockSize>
-template<typename U>
-bool MemoryPool<T, BlockSize>::operator!=(const MemoryPool<U>&)
-const noexcept {
-    return false;
-}
 
 template <typename T, size_t BlockSize>
 inline typename MemoryPool<T, BlockSize>::pointer
@@ -177,6 +160,15 @@ void MemoryPool<T, BlockSize>::allocateBlock() {
     currentSlot_ = reinterpret_cast<slot_pointer_>(body + padding);
     lastSlot_ = reinterpret_cast<slot_pointer_>
                 (newBlock + BlockSize - sizeof(slot_type_) + 1);
+}
+
+// Get the single memory pool instance
+template <typename T, size_t BlockSize>
+MemoryPool<T, BlockSize>&
+MemoryPool<T, BlockSize>::getInstance()
+{
+    static MemoryPool instance;
+    return instance;
 }
 
 #endif // !MEMORY_POOL_TCC_
