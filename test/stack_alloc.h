@@ -1,5 +1,5 @@
-#ifndef TEST_H_
-#define TEST_H_
+#ifndef STACK_ALLOC_H
+#define STACK_ALLOC_H
 
 #include <memory>
 
@@ -88,4 +88,4 @@ T StackAlloc<T, Alloc>::pop() {
     return result;
 }
 
-#endif // !TEST_H_
+#endif // !STACK_ALLOC_H

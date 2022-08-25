@@ -4,7 +4,7 @@
 #include <vector>   // std::vector
 
 #include "../src/memory_pool.h" // MemoryPool<T>
-#include "test.h" // StackAlloc<T, Alloc>
+#include "stack_alloc.h" // StackAlloc<T, Alloc>
 
 // 插入元素个数
 #define ELEMS 10000000
