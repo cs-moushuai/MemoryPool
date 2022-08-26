@@ -41,10 +41,10 @@ public:
     Allocator& operator=(Allocator &&rhs) noexcept;
 
     // == and != operators
-    template<typename U>
+    template <typename U>
     bool operator==(const Allocator<U>&) const noexcept;
 
-    template<typename U>
+    template <typename U>
     bool operator!=(const Allocator<U>&) const noexcept;
 
     pointer allocate(size_type n = 1, const_pointer hint = 0);

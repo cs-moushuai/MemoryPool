@@ -21,14 +21,14 @@ template <typename T>
 Allocator<T>& Allocator<T>::operator=(Allocator<T> &&rhs) noexcept {}
 
 template <typename T>
-template<typename U>
+template <typename U>
 bool Allocator<T>::operator==(const Allocator<U>&)
 const noexcept {
     return true;
 }
 
 template <typename T>
-template<typename U>
+template <typename U>
 bool Allocator<T>::operator!=(const Allocator<U>&)
 const noexcept {
     return false;
@@ -47,6 +47,20 @@ template <typename T>
 inline void
 Allocator<T>::deallocate(pointer p, size_type n) {
     MemoryPool<T>::getInstance().deallocate(p, n);
+}
+
+template <typename T>
+template <typename U, typename... Args>
+inline void
+Allocator<T>::construct(U* p, Args&&... args) {
+    MemoryPool<T>::getInstance().construct(p, args...);
+}
+
+template <typename T>
+template <typename U>
+inline void
+Allocator<T>::destroy(U* p) {
+    MemoryPool<T>::getInstance().destroy(p);
 }
 
 #endif // !ALLOCATE_TCC_
